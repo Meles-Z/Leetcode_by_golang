@@ -1,3 +1,5 @@
-<h1>Hello Header</h1>
-
-<slot/>
+<script>
+    import '../app.css'
+  </script>
+  
+  <slot />

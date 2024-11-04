@@ -1,22 +1,13 @@
 <script>
-  import {goto} from '$app/navigation'
-  import Test from "$lib/component/Test/test.svelte";
-  import Main from "../lib/component/main.svelte";
-  
+  import Button from "$lib/componets/reusable/Button.svelte";
+  let count = 0;
 
-  let namaste=" Hello, Svelte! {namaste}  ��"
-
-  const person={
-    test:"Namaster namaha",
-    age:12,
-  }
-  function handleClick() {
-    goto('/home')
+  function increment() {
+    count += 1;
   }
 </script>
 
-<button on:click="{handleClick}">
-  Click me
-</button>
-<Main />
-<Test {...person} />
+<main class="ml-5">
+  <p>{count}</p>
+  <Button label="Icrement" onClick={increment} />
+</main>
