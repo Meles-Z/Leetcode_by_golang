@@ -1,33 +1,18 @@
 package main
 
 import (
-	"fmt"
-	"math"
+	"log"
+
+	c "github.com/meles-z/test/configs"
+	"github.com/meles-z/test/internal"
 )
 
-type Shape interface {
-	Area() float64
-}
-
-type Reactangle struct {
-	width  float64
-	height float64
-}
-
-type Circle struct {
-	radius float64
-}
-
-func (rect Reactangle) Area() float64 {
-	return rect.height * rect.width
-}
-func (c Circle) Area() float64 {
-	return math.Pi * c.radius * c.radius
-}
 func main() {
-	var s Shape
-	s = Reactangle{width: 3, height: 3}
-	fmt.Println(s.(Reactangle).Area())
-	s = Circle{radius: 3}
-	fmt.Println(s.(Circle).Area())
+
+	configs, err := c.LoadConfig()
+	if err != nil {
+		log.Fatalln("Could not load config", err)
+	}
+	internal.NewServer(*configs)
+
 }
