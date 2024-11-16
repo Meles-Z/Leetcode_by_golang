@@ -1,18 +1,45 @@
 package main
 
 import (
-	"log"
-
-	c "github.com/meles-z/test/configs"
-	"github.com/meles-z/test/internal"
+	"fmt"
+	"time"
 )
 
-func main() {
+func OtherMethod() {
+	start := time.Now() // Record the start time
 
-	configs, err := c.LoadConfig()
-	if err != nil {
-		log.Fatalln("Could not load config", err)
+	for i := 0; i <= 10; i++ {
+		square := i * i
+		fmt.Println(square)
 	}
-	internal.NewServer(*configs)
 
+	elapsed := time.Since(start) 
+	fmt.Println("Execution time for OtherMethod:", elapsed)
+}
+
+func main() {
+	OtherMethod()
+	start:=time.Now()
+	nums := make(chan int)
+	squares := make(chan int)
+
+	go func() {
+		for i := 0; i <= 10; i++ {
+			nums <- i
+		}
+		close(nums)
+	}()
+
+	go func() {
+		for num := range nums {
+			squares <- num * num
+		}
+		close(squares)
+	}()
+
+	for square := range squares {
+		fmt.Println(square)
+	}
+	elspsed:=time.Since(start)
+	fmt.Println("Time to execution", elspsed)
 }
