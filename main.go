@@ -2,13 +2,19 @@ package main
 
 import "fmt"
 
-func main() {
-	num := [4]int{2, 3, 4, 5}
-	greater := num[0]
-	for i := 0; i < len(num); i++ {
-		if num[i] > greater {
-			greater = num[i]
+func occurenceOfString(char string) int{
+	count:=0
+	for i:=0; i<len(char); i++{
+		for j:=i+1; j<len(char); j++{
+			if char[i]==char[j]{
+				count++
+				break
+			}
 		}
 	}
-	fmt.Println(greater)
+	return count
+}
+func main(){
+	ch:="melesmm"
+	fmt.Println(occurenceOfString(ch))
 }
