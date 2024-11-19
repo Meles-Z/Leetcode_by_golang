@@ -1,20 +1,25 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
-func occurenceOfString(char string) int{
-	count:=0
-	for i:=0; i<len(char); i++{
-		for j:=i+1; j<len(char); j++{
-			if char[i]==char[j]{
-				count++
-				break
-			}
+func isPrime(n int) bool {
+	if n <= 1 {
+		return false
+	}
+	for i := 2; i*i <= n; i++ {
+		if n%i == 0 {
+			return false
 		}
 	}
-	return count
+	return true
 }
-func main(){
-	ch:="melesmm"
-	fmt.Println(occurenceOfString(ch))
+func main() {
+	var n int = 20
+	for i := 0; i <= n; i++ {
+		if isPrime(i) {
+			fmt.Println(i)
+		}
+	}
 }
