@@ -1,49 +1,41 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
-type Node struct {
-	data int
-	next *Node
+type Flight struct {
+	Origin      string
+	Destination string
+	Price       int
 }
 
-type LinkedList struct {
-	head *Node
-}
-
-func (list *LinkedList) InserAtEnd(data int) {
-	newNode := Node{data: data, next: nil}
-	if list.head == nil {
-		list.head = &newNode
-		return
+func sortByPrice(flights []Flight) []Flight {
+	n := len(flights)
+	for i := 0; i < n-1; i++ {
+		for j := 0; j < n-i-1; j++ {
+			// Compare current flight with the next one
+			if flights[j].Price < flights[j+1].Price {
+				// Swap flights[j] and flights[j+1]
+				flights[j], flights[j+1] = flights[j+1], flights[j]
+			}
+		}
 	}
-	current := list.head
-	for current.next != nil {
-		current = current.next
-	}
-	current.next = &newNode
-}
-func (list *LinkedList) InsertAtFirst(data int) {
-	newNode := Node{data: data, next: list.head}
-	if list.head == nil {
-		list.head = &newNode
-		return
-	}
-	list.head = &newNode
-}
-
-func (list *LinkedList) Display() {
-	current := list.head
-	for current != nil {
-		fmt.Println(current.data)
-		current = current.next
-	}
+	return flights
 }
 
 func main() {
-	list := LinkedList{}
-	list.InserAtEnd(5)
-	list.InserAtEnd(6)
-	list.InsertAtFirst(7)
-	list.Display()
+	flights := []Flight{
+		{"New York", "London", 500},
+		{"Paris", "Tokyo", 700},
+		{"Mumbai", "Dubai", 200},
+		{"Los Angeles", "Sydney", 1200},
+	}
+
+	sortedFlights := sortByPrice(flights)
+
+	fmt.Println("Flights sorted by price (highest to lowest):")
+	for _, flight := range sortedFlights {
+		fmt.Printf("From %s to %s - $%d\n", flight.Origin, flight.Destination, flight.Price)
+	}
 }
