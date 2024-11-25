@@ -1,8 +1,6 @@
 package main
 
-import (
-	"fmt"
-)
+import "fmt"
 
 type Node struct {
 	data int
@@ -13,11 +11,19 @@ type LinkedList struct {
 	head *Node
 }
 
-func (list *LinkedList) InserAtEnd(data int) {
+func (list *LinkedList) insertAtBegin(data int) {
 	newNode := Node{data: data, next: nil}
 	if list.head == nil {
 		list.head = &newNode
 		return
+	}
+	newNode.next = list.head
+	list.head = &newNode
+}
+func (list *LinkedList) insertAtEnd(data int) {
+	newNode := Node{data: data, next: nil}
+	if list.head == nil {
+		list.head = &newNode
 	}
 	current := list.head
 	for current.next != nil {
@@ -25,77 +31,134 @@ func (list *LinkedList) InserAtEnd(data int) {
 	}
 	current.next = &newNode
 }
-func (list *LinkedList) InsertAtFirst(data int) {
-	newNode := Node{data: data, next: list.head}
-	if list.head == nil {
+
+// [3|next][8|next][9|next]
+func (list *LinkedList) insertBeforeValue(data, targetValue int) {
+	newNode := Node{data: data, next: nil}
+
+	if list.head.data == targetValue {
+		newNode.next = list.head
 		list.head = &newNode
-		return
 	}
-	list.head = &newNode
+	current := list.head
+	for current.next != nil {
+		if current.next.data == targetValue {
+			newNode.next = current.next
+			current.next = &newNode
+			return
+		}
+		current = current.next
+	}
+
 }
 
-func (list *LinkedList) InsertAfterValue(data, val int) {
+// [3|next][8|next][9|next]
+func (list *LinkedList) insertAfterValue(data int, targetValue int) {
 	newNode := Node{data: data, next: nil}
 	if list.head == nil {
 		list.head = &newNode
 	}
 	current := list.head
 	for current != nil {
-		if current.data == val {
+		if current.data == targetValue {
 			newNode.next = current.next
 			current.next = &newNode
+			return
+
 		}
 		current = current.next
-
 	}
 
 }
 
-func (list *LinkedList) InsertBeforeValue(data, val int) {
-	newNode := &Node{data: data}
-
-	// Case 1: If the list is empty
+func (list *LinkedList) deleteAtFirst() {
 	if list.head == nil {
-		fmt.Println("The list is empty. Cannot insert before the value.")
+		fmt.Println("List is empty")
 		return
 	}
+	list.head = list.head.next
+}
 
-	// Case 2: If the value is in the head node
-	if list.head.data == val {
-		newNode.next = list.head
-		list.head = newNode
+// [3|next][8|next][9|next]
+func (list *LinkedList) deleteAtEnd() {
+	if list.head == nil {
+		fmt.Println("List is empty")
 		return
 	}
-
-	// Case 3: Traverse the list to find the value
+	if list.head.next == nil {
+		list.head = nil
+		return
+	}
 	current := list.head
-	for current.next != nil {
-		if current.next.data == val {
-			newNode.next = current.next // Link the new node to the target node
-			current.next = newNode      // Link the previous node to the new node
-			return                      // Exit after insertion
+	for current.next.next != nil {
+		current = current.next
+	}
+	current.next = nil
+}
+
+// [3|next][8|next][9|next]
+func (list *LinkedList) deleteAfterValue(target int) {
+	if list.head == nil {
+		fmt.Println("List is empty")
+	}
+	for list.head.next == nil {
+		list.head = nil
+		return
+	}
+	current := list.head
+	for current != nil {
+		if current.data == target {
+			current.next = current.next.next
+			return
 		}
 		current = current.next
 	}
-
-	// If the value is not found
-	fmt.Println("Value not found in the list.")
 }
 
-func (list *LinkedList) Display() {
+// [3|next][8|next][9|next]
+func (list *LinkedList) deleteBeforeValue(target int) {
+	if list.head == nil || list.head.next == nil {
+		fmt.Println("Not enough to perfom operations")
+		return
+	}
+	// if the second node is targeted
+	if list.head.next.data == target {
+		list.head = list.head.next
+		return
+	}
+
+	// traverse on list
+	prev := list.head
+	current := list.head.next
+	for current.next != nil {
+		if current.next.data == target {
+			prev.next = current.next
+			return
+		}
+		prev = current
+		current = current.next
+	}
+}
+func (list *LinkedList) display() {
 	current := list.head
 	for current != nil {
 		fmt.Println(current.data)
 		current = current.next
 	}
 }
-
 func main() {
 	list := LinkedList{}
-	list.InserAtEnd(5)
-	list.InserAtEnd(6)
-	list.InsertAtFirst(4)
-	list.InsertAfterValue(9, 5)
-	list.InsertBeforeValue(4,9)
-	list.Display()
+	list.insertAtBegin(3)
+	list.insertAtBegin(2)
+	list.insertAtEnd(7)
+	list.insertAtEnd(4)
+	list.insertBeforeValue(9, 7)
+	list.insertBeforeValue(10, 3)
+	list.insertAfterValue(5, 4)
+	list.insertAfterValue(8, 5)
+	list.deleteAtFirst()
+	list.deleteAtEnd()
+	list.deleteAfterValue(9)
+	list.deleteBeforeValue(4)
+	list.display()
 }
