@@ -40,6 +40,7 @@ func (list *LinkedList) insertBeforeValue(data, target int) {
 	if list.head.data == target {
 		newNode.next = list.head
 		list.head = &newNode
+		return
 	}
 	current := list.head
 	for current.next != nil {
@@ -51,6 +52,22 @@ func (list *LinkedList) insertBeforeValue(data, target int) {
 		current = current.next
 	}
 
+}
+func (list *LinkedList) insertAfterValue(data, target int) {
+	newNode := Node{data: data, next: nil}
+	if list.head == nil {
+		fmt.Println("Target value is empty")
+		return
+	}
+	current := list.head
+	for current != nil {
+		if current.data == target {
+			newNode.next=current.next
+			current.next=&newNode
+			return
+		}
+		current=current.next
+	}
 }
 func (list *LinkedList) display() {
 	if list.head != nil {
@@ -68,5 +85,6 @@ func main() {
 	list.InsertAtBegin(5)
 	list.insertAtEnd(6)
 	list.insertBeforeValue(10, 6)
+	list.insertAfterValue(8, 6)
 	list.display()
 }
