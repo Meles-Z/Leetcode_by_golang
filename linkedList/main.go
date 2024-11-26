@@ -139,6 +139,14 @@ func (list *LinkedList) deleteBeforeValue(target int) {
 		current = current.next
 	}
 }
+func (list *LinkedList) countNodes() (count int) {
+	current := list.head
+	for current != nil {
+	 current = current.next
+	 count++
+	}
+	return
+   }
 func (list *LinkedList) display() {
 	current := list.head
 	for current != nil {
@@ -160,5 +168,6 @@ func main() {
 	list.deleteAtEnd()
 	list.deleteAfterValue(9)
 	list.deleteBeforeValue(4)
+	list.countNodes()
 	list.display()
 }
