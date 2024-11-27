@@ -16,13 +16,18 @@ func (q *Queue) deque() {
 	}
 	q.element = q.element[1:]
 }
+func (q *Queue) peek() int {
+	count := 0
+	for q.element != nil {
+		count++
+	}
+	return count
+}
 func main() {
 	que := Queue{}
 	que.Enqueue(4)
 	que.Enqueue(5)
 	que.Enqueue(5)
-	que.deque()
-	que.deque()
-	que.deque()
+	que.peek()
 	fmt.Println(que)
 }

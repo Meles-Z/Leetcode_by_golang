@@ -2,27 +2,25 @@ package main
 
 import "fmt"
 
+type CircleQueue struct {
+	data  []int
+	size  int
+	front int
+	rare  int
+}
 
-type Queue struct{
-	element []int
-}
-func (q *Queue)Enqueue(data int){
-	q.element=append(q.element, data)
-}
-func (q *Queue) deque(){
-	if len(q.element)==0{
-		fmt.Println("Queue is empty")
-		return
+func NewCircularLinkedList(size int) *CircleQueue {
+	return &CircleQueue{
+		data:  make([]int, size),
+		size:  size,
+		front: -1,
+		rare:  -1,
 	}
-	q.element=q.element[1:]
 }
-func main(){
-	que:=Queue{}
-	que.Enqueue(4)
-	que.Enqueue(5)
-	que.Enqueue(5)
-	que.deque()
-	que.deque()
-	que.deque()
-	fmt.Println(que)
+func (q *CircleQueue) isFull() bool {
+	return (q.rare+1)%q.size == q.front
+}
+
+func main() {
+	fmt.Print("Hello circluar linked list")
 }
