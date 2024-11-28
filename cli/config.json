@@ -1,0 +1,7 @@
+{
+    "concurrency": 5,
+    "rate_limit": 10,
+    "input_file": "urls.txt",
+    "output_file": "output.csv"
+  }
+  
