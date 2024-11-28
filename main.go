@@ -2,25 +2,17 @@ package main
 
 import "fmt"
 
-type CircleQueue struct {
-	data  []int
-	size  int
-	front int
-	rare  int
-}
-
-func NewCircularLinkedList(size int) *CircleQueue {
-	return &CircleQueue{
-		data:  make([]int, size),
-		size:  size,
-		front: -1,
-		rare:  -1,
+func missingLessNumber(nums []int) int {
+	greater := 0
+	for i := 0; i < len(nums)-1; i++ {
+		if nums[i] > nums[i+1] {
+			greater = nums[i]
+		}
 	}
-}
-func (q *CircleQueue) isFull() bool {
-	return (q.rare+1)%q.size == q.front
+	return greater
 }
 
 func main() {
-	fmt.Print("Hello circluar linked list")
+	gr := []int{3, 5, 13, 5}
+	fmt.Println(missingLessNumber(gr))
 }
