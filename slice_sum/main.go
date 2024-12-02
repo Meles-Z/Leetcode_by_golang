@@ -8,11 +8,12 @@ func addTwoSlices(nums1 []int, nums2 []int) []int {
 		return nil
 	}
 
-	sum := []int{}
+	sum := make([]int, len(nums1))
 	for i := 0; i < len(nums1); i++ {
-		sum = append(sum, nums1[i]+nums2[i])
+		sum[i] = nums1[i] + nums2[i]
 	}
 	return sum
+
 }
 
 func main() {

@@ -16,5 +16,5 @@ func findMissingNumberInArray(nums []int) []int {
 }
 
 func main() {
-	fmt.Println(findMissingNumberInArray([]int{1, 3, 4, 6}))
+	fmt.Println(findMissingNumberInArray([]int{1, 2, 3, 4, 6}))
 }
