@@ -133,6 +133,32 @@ func (q *Queue) Dequeue() (int, error) {
 	return value, nil
 }
 
+func lengthOfLongestSubstring(s string) int {
+    charMap := make(map[rune]int) // A map to store the last seen index of each character
+    left := 0                      // Left pointer of the sliding window
+    maxLength := 0                 // Variable to store the maximum length of substring without repeating characters
+
+    // Iterate through the string with the right pointer (i.e., the right side of the sliding window)
+    for right, char := range s {
+        // If the character has been seen and its index is within the current window, move the left pointer
+        if lastIndex, found := charMap[char]; found && lastIndex >= left {
+            left = lastIndex + 1 // Move the left pointer to the position right after the last occurrence
+        }
+
+        // Update the map with the current character's latest index
+        charMap[char] = right
+
+        // Calculate the length of the current window and update maxLength if it's larger
+        currentLength := right - left + 1
+        if currentLength > maxLength {
+            maxLength = currentLength
+        }
+    }
+
+    return maxLength // Return the maximum length found
+}
+
+
 func main() {
 	q := &Queue{}
 	q.Enqueue(1)
