@@ -2,33 +2,23 @@ package main
 
 import "fmt"
 
-func isBalanced(p string) bool {
-	pairs := map[rune]rune{
-		'(': ')',
-		'[': ']',
-		'{': '}',
+func Login(user, pass string) {
+	if user == "username" && pass == "password" {
+		fmt.Println("Login succesfull")
+	} else {
+		fmt.Println("Incorrect username or password")
 	}
-	stack := []rune{}
-	for _, c := range p {
-		if c == '(' || c == '[' || c == '{' {
-			stack = append(stack, c)
-		} else {
-			if len(stack) < 1 {
-				return false
-			}
-			if c == pairs[stack[len(stack)-1]] {
-				stack = stack[:len(stack)-1]
-			} else {
-				return false
-			}
+}
+func Seach(s string, target byte) bool {
+	for i := 0; i < len(s); i++ {
+		if s[i] == target {
+			return true
 		}
 	}
-	return true
+	return false
 }
-
 func main() {
-	parenthese := []string{")(", "[(])", "(()){}[]"}
-	for _, p := range parenthese {
-		fmt.Println(isBalanced(p))
-	}
+	Login("username", "password")
+	Login("username", "passw")
+	fmt.Println(Seach("Generator", 'G'))
 }
