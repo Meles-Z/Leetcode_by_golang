@@ -1,0 +1,17 @@
+
+FROM ubuntu:latest
+
+LABEL version="0.01"
+LABEL maintainer="meles.zawdie@gmail.com"
+
+#update the image to the laster package 
+RUN apt-get update && apt-get upgrade -y
+
+# install NGNIX to test
+RUN apt-get install nginx -y
+
+# expose the port
+EXPOSE 80
+
+# the actual command to start up NGNIX with out container
+CMD [ "nginx", "-g", "daemon off;" ]

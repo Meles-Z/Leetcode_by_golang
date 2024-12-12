@@ -1,0 +1,10 @@
+FROM  nginx:latest
+
+LABEL version="0.0.1"
+LABEL maintainer="meles.zawdie@gmail.com"
+
+#updating the working directory
+WORKDIR /usr/share/nginx/html
+
+#Replace index.html with custom file
+COPY index.html index.html
