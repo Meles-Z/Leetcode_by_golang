@@ -1,0 +1,15 @@
+ARG BASE_IMAGE
+
+FROM ${BASE_IMAGE}
+
+WORKDIR /app
+
+#accept dynamic conteint
+ARG APP_NAME
+ENV APP_NAME=${APP_NAME}
+
+#set environmental variable
+ENV ENVIRONMENT=development
+
+COPY . .
+CMD [ "node", "app.js" ]
