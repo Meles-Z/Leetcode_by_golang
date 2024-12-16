@@ -67,7 +67,6 @@ func threeSumm(nums []int) [][]int {
             if sum == 0 {
                 // Found a triplet
                 result = append(result, []int{nums[i], nums[left], nums[right]})
-                
                 // Skip duplicates for `left` and `right`
                 for left < right && nums[left] == nums[left+1] {
                     left++
