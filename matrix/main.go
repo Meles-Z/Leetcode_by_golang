@@ -44,6 +44,17 @@ func transpose(matrix1 [2][2]int) [2][2]int {
 	return transMatrix
 }
 
+func construct2DArray(original []int, m int, n int) [][]int {
+	if len(original) != m*n {
+		return [][]int{}
+	}
+	result := make([][]int, m)
+	for i := 0; i < m; i++ {
+		result[i] = original[i*n : (i+1)*n]
+	}
+	return result
+}
+
 func main() {
 	fmt.Println(Identity(4))
 	fmt.Println(AddMatrix([2][2]int{{1, 2}, {1, 2}}, [2][2]int{{3, 4}, {5, 6}}))
