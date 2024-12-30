@@ -27,6 +27,7 @@ func (ca *CircularArray) Enqueue(value int) error {
 	return nil
 }
 
+
 func (ca *CircularArray) Dequeue() (int, error) {
 	if ca.size == 0 {
 		return 0, fmt.Errorf("queue is empty")
