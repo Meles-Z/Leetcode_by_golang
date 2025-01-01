@@ -2,24 +2,23 @@ package main
 
 import "fmt"
 
-func permute(nums []int) [][]int {
-	if len(nums) == 0 {
-		return [][]int{{}}
-	}
-	var result [][]int
-	for i, num := range nums {
-		rest := append([]int{}, nums[:i]...)
-		rest = append(rest, nums[i+1:]...)
-		for _, perm := range permute(rest) {
-			result = append(result, append([]int{num}, perm...))
+func binarySearch(num []int, target int) int {
+	start := 0
+	end := len(num) - 1
+
+	for start <= end {
+		middle := (start + end) / 2
+		if num[middle] == target {
+			return middle
+		} else if num[middle] < target {
+			start = middle + 1
+		} else {
+			end = middle - 1
 		}
 	}
-
-	return result
+	return -1
 }
 
 func main() {
-
-	fmt.Println(permute([]int{4, 5, 6}))
-
+	fmt.Println(binarySearch([]int{2, 3, 4, 5}, 5))
 }

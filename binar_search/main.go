@@ -6,8 +6,8 @@ import (
 )
 
 func binarySearch(num []int, target int) int {
-	start := num[0]
-	end := num[len(num)-1]
+	start := 0
+	end := len(num) - 1
 
 	for start <= end {
 		middle := (start + end) / 2
@@ -21,7 +21,6 @@ func binarySearch(num []int, target int) int {
 	}
 	return -1
 }
-
 func main() {
 	data := []int{4, 5, 1, 9, 6, 10}
 	sort.Ints(data)
