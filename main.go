@@ -1,14 +1,18 @@
 package main
 
 import (
-	"github.com/labstack/echo/v4"
-	"github.com/labstack/echo/v4/middleware"
+	"fmt"
+	"net/http"
 )
 
 
-func Authentication() echo.MiddlewareFunc{
-	cnfg:=middleware.JWTConfig{}
+func TestApp(url string, result chan <-string) {
+	// let us use step to step how we can do this process
+	//1; create the client
+	// 2; create request
+	//3; send request
+	// dispaly response
 }
-func main(){
-
+func main() {
+	fmt.Println("Lets start our jorneys of the world...!")
 }
