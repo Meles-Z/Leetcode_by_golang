@@ -15,6 +15,7 @@ func makeArray(length int) []int {
 	return array
 }
 
+
 var wg sync.WaitGroup
 
 func main() {
