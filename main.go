@@ -2,17 +2,35 @@ package main
 
 import (
 	"fmt"
-	"net/http"
+	"math/rand"
+	"sync"
 )
 
+func makeArray(length int) []int {
 
-func TestApp(url string, result chan <-string) {
-	// let us use step to step how we can do this process
-	//1; create the client
-	// 2; create request
-	//3; send request
-	// dispaly response
+	array := []int{}
+	for i := 0; i < length; i++ {
+		array = append(array, rand.Intn(10))
+	}
+	return array
 }
+
+var wg sync.WaitGroup
+
 func main() {
-	fmt.Println("Lets start our jorneys of the world...!")
+	ch := make(chan []int, 10)
+	
+	for i := 0; i < 10; i++ {
+		wg.Add(1)
+		go func() {
+			defer wg.Done()
+			makeArray := makeArray(10)
+			ch<- makeArray
+		}()
+	}
+	wg.Wait()
+	close(ch)
+	for v := range ch {
+		fmt.Println(v)
+	}
 }
