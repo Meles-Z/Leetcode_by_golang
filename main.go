@@ -61,22 +61,59 @@ func main() {
 package main
 
 import (
+	"encoding/json"
 	"fmt"
-	"strconv"
+	"io"
+	"net/http"
 )
 
+type User struct {
+	ID       int    `json:"id"`
+	Name     string `json:"name"`
+	Username string `json:"username"`
+	Email    string `json:"email"`
+	Address  struct {
+		Street  string `json:"street"`
+		Suite   string `json:"suite"`
+		City    string `json:"city"`
+		Zipcode string `json:"zipcode"`
+	} `json:"address"`
+	Phone   string `json:"phone"`
+	Website string `json:"website"`
+	Company struct {
+		Name        string `json:"name"`
+		CatchPhrase string `json:"catchPhrase"`
+		Bs          string `json:"bs"`
+	} `json:"company"`
+}
 
- 
-func main(){
-	ch:=make(chan string)
-	for i:=0; i<10; i++{
-		go func(){
-			for j:=0; j<10; j++{
-				ch<-"Gorutines: "+strconv.Itoa(i)
-			}
-		}()
+
+
+func WebScrapper(url string) {
+	res, err := http.Get(url)
+	if err != nil {
+		fmt.Printf("error occured:%s", err)
+		return
 	}
-	for k:=0; k<100; k++{
-		fmt.Println(<-ch)
+	defer res.Body.Close()
+	body, err := io.ReadAll(res.Body)
+	if err != nil {
+		fmt.Println(err)
+		return
 	}
+	var users []User
+	err = json.Unmarshal(body, &users)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	for _, user := range users {
+		fmt.Println(user.Email)
+	}
+}
+
+func main() {
+	url := "https://jsonplaceholder.typicode.com/users"
+	WebScrapper(url)
 }
