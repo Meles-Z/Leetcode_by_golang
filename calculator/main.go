@@ -38,6 +38,7 @@ func main() {
 		fmt.Println("2.Substruct")
 		fmt.Println("3.Devide")
 		fmt.Println("4.Multiplication")
+		fmt.Println("5.Exit")
 		fmt.Println("Enter your choice:")
 		fmt.Scan(&choice)
 		switch choice {
