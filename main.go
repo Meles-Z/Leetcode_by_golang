@@ -61,6 +61,7 @@ func main() {
 package main
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -72,48 +73,57 @@ type User struct {
 	Name     string `json:"name"`
 	Username string `json:"username"`
 	Email    string `json:"email"`
-	Address  struct {
-		Street  string `json:"street"`
-		Suite   string `json:"suite"`
-		City    string `json:"city"`
-		Zipcode string `json:"zipcode"`
-	} `json:"address"`
-	Phone   string `json:"phone"`
-	Website string `json:"website"`
-	Company struct {
-		Name        string `json:"name"`
-		CatchPhrase string `json:"catchPhrase"`
-		Bs          string `json:"bs"`
-	} `json:"company"`
 }
 
+func RequestResponse(url string) {
+	// Create a user with sample data
+	user := User{
+		ID:       1,
+		Name:     "Meles Zawude",
+		Username: "meles.zawdie@gmail.com",
+		Email:    "meles@example.com",
+	}
 
-
-func WebScrapper(url string) {
-	res, err := http.Get(url)
+	// Marshal user data into JSON
+	userJson, err := json.Marshal(user)
 	if err != nil {
-		fmt.Printf("error occured:%s", err)
+		fmt.Println("Error marshalling user:", err)
+		return
+	}
+
+	// Create a request with the JSON body
+	usrByte := bytes.NewBuffer(userJson)
+	req, err := http.NewRequest("POST", url, usrByte)
+	if err != nil {
+		fmt.Println("Error creating request:", err)
+		return
+	}
+
+	// Set appropriate headers for JSON content
+	req.Header.Set("Content-Type", "application/json")
+
+	// Create an HTTP client
+	client := &http.Client{}
+
+	// Send the request
+	res, err := client.Do(req)
+	if err != nil {
+		fmt.Printf("Error sending request: %s\n", err)
 		return
 	}
 	defer res.Body.Close()
+
+	// Read and display the response body
 	body, err := io.ReadAll(res.Body)
 	if err != nil {
-		fmt.Println(err)
-		return
-	}
-	var users []User
-	err = json.Unmarshal(body, &users)
-	if err != nil {
-		fmt.Println(err)
+		fmt.Println("Error reading response body:", err)
 		return
 	}
 
-	for _, user := range users {
-		fmt.Println(user.Email)
-	}
+	fmt.Printf("Response from server: %s\n", body)
 }
 
 func main() {
-	url := "https://jsonplaceholder.typicode.com/users"
-	WebScrapper(url)
+	RequestResponse("https://jsonplaceholder.typicode.com/users") // Corrected URL
 }
+
