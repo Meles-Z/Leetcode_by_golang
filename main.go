@@ -1,129 +1,56 @@
-/*
 package main
 
-import (
-	"context"
-	"fmt"
-	"io"
-	"net/http"
-	"time"
-)
+import "fmt"
 
-func Scrapper(cxt context.Context, url string, result chan<- string) {
-	// send request to get response
-	req, err := http.NewRequestWithContext(cxt, http.MethodGet, url, nil)
-	if err != nil {
-		result <- fmt.Sprintf("Error feaching:%s:%s", url, err)
-		return
+func slideWindow(nums []int, target int) []int {
+	if len(nums) < 3 {
+		return []int{}
 	}
-	res, err := http.DefaultClient.Do(req)
-	if err != nil {
-		select {
-		case result <- fmt.Sprintf("Error creating request for:%s:%s", url, err):
-		case <-cxt.Done():
-			result <- fmt.Sprintf("Request to :%s timeout", url)
+
+	sum := nums[0] + nums[1] + nums[2]
+	for i := 3; i < len(nums); i++ {
+		if sum == target {
+			return []int{nums[i-3], nums[i-2], nums[i-1]}
 		}
-		return
+		// start slide window
+		sum = sum - nums[i-3] + nums[i]
 	}
-	defer res.Body.Close()
-	body, err := io.ReadAll(res.Body)
-	if err != nil {
-		result <- fmt.Sprintf("Error feaching:%s:%s", url, err)
-		return
+	if sum == target {
+		return []int{nums[len(nums)-3], nums[len(nums)-2], nums[len(nums)-1]}
 	}
-	result <- fmt.Sprintf("Response from:%s:\n %s", url, string(body))
-}
-func main() {
-	start := time.Now()
-	urls := []string{
-		"https://jsonplaceholder.org/users",
-		"https://example.com",
-		// "https://google.com",
-	}
-	ch := make(chan string)
-	for _, url := range urls {
-		go func(url string) {
-			ctx, cancel := context.WithTimeout(context.Background(), 1*time.Second)
-			defer cancel()
-			Scrapper(ctx, url, ch)
-		}(url)
-	}
-
-	for i := 0; i < len(urls); i++ {
-		fmt.Println(<-ch)
-	}
-	close(ch)
-	elipse := time.Since(start)
-	fmt.Println("The response time is:", elipse)
-}
-*/
-
-package main
-
-import (
-	"bytes"
-	"encoding/json"
-	"fmt"
-	"io"
-	"net/http"
-)
-
-type User struct {
-	ID       int    `json:"id"`
-	Name     string `json:"name"`
-	Username string `json:"username"`
-	Email    string `json:"email"`
+	return []int{}
 }
 
-func RequestResponse(url string) {
-	// Create a user with sample data
-	user := User{
-		ID:       1,
-		Name:     "Meles Zawude",
-		Username: "meles.zawdie@gmail.com",
-		Email:    "meles@example.com",
+func targetSum(nums []int, target int) []int {
+	k := 3 // Size of the sliding window
+	windowSum := 0
+	// Initialize the first window sum
+	for i := 0; i < k; i++ {
+		windowSum += nums[i]
 	}
 
-	// Marshal user data into JSON
-	userJson, err := json.Marshal(user)
-	if err != nil {
-		fmt.Println("Error marshalling user:", err)
-		return
+	for i := k; i < len(nums); i++ {
+		// If the window sum matches the target, return the window
+		if windowSum == target {
+			return nums[i-k : i] // Return the window as a slice
+		}
+
+		// Slide the window:
+		// Remove the first number of the previous window
+		windowSum -= nums[i-k]
+
+		// Add the next number to the window
+		windowSum += nums[i]
 	}
 
-	// Create a request with the JSON body
-	usrByte := bytes.NewBuffer(userJson)
-	req, err := http.NewRequest("POST", url, usrByte)
-	if err != nil {
-		fmt.Println("Error creating request:", err)
-		return
+	// Final check for the last window
+	if windowSum == target {
+		return nums[len(nums)-k:]
 	}
 
-	// Set appropriate headers for JSON content
-	req.Header.Set("Content-Type", "application/json")
-
-	// Create an HTTP client
-	client := &http.Client{}
-
-	// Send the request
-	res, err := client.Do(req)
-	if err != nil {
-		fmt.Printf("Error sending request: %s\n", err)
-		return
-	}
-	defer res.Body.Close()
-
-	// Read and display the response body
-	body, err := io.ReadAll(res.Body)
-	if err != nil {
-		fmt.Println("Error reading response body:", err)
-		return
-	}
-
-	fmt.Printf("Response from server: %s\n", body)
+	return nil // Return nil if no such window is found
 }
 
 func main() {
-	RequestResponse("https://jsonplaceholder.typicode.com/users") // Corrected URL
+	fmt.Println(targetSum([]int{1, 2, 3, 4, 5}, 12))
 }
-
