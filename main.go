@@ -2,38 +2,43 @@ package main
 
 import "fmt"
 
-func returnTwoDimenstion(rows, cols int) [][]int {
-	matrix := make([][]int, rows)
-	for i := range matrix {
-		matrix[i] = make([]int, cols)
-	}
-
-	return matrix
+type Family struct {
+	person []Person
+}
+type Person struct {
+	Name          string
+	Age           int
+	MartialStatus string
 }
 
-func threeDimensions(rows, cols int) [][][]int {
-	matrix := make([][][]int, rows)
-	for i:=range matrix{
-		matrix[i]=make([][]int, rows)
-		for j:=range matrix[i]{
-			matrix[i][j]=make([]int, cols)
-		}
+func defaultPerson() Person {
+	return Person{
+		Name:          "Meles",
+		Age:           12,
+		MartialStatus: "married",
 	}
-	return matrix
 }
+
+func NewFamily() *Family {
+	defaultPerson := defaultPerson()
+	return &Family{
+		person: []Person{defaultPerson},
+	}
+}
+
+func (family *Family) AddFamily(name string, age int, martial string) {
+	person := Person{
+		Name:          name,
+		Age:           age,
+		MartialStatus: martial,
+	}
+	family.person = append(family.person, person)
+}
+
 func main() {
-	row := 3
-	cols := 4
-	matrix := returnTwoDimenstion(row, cols)
-	for i := 0; i < row; i++ {
-		for j := 0; j < cols; j++ {
-			matrix[i][j] = i*cols + j + 1
-		}
+	family := NewFamily()
+	family.AddFamily("namaste", 23, "rrt")
+	for _, val:=range family.person{
+		fmt.Println(val)
 	}
-	for i := 0; i < len(matrix); i++ {
-
-		fmt.Println(matrix[i])
-	}
-  matr:=threeDimensions(row, cols)
-  fmt.Println("three Dimesnsiton", matr)
 }
