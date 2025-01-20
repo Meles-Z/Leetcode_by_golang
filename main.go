@@ -2,6 +2,7 @@ package main
 
 import "fmt"
 
+type customeFunc func(*Person)
 type Family struct {
 	person []Person
 }
@@ -19,8 +20,12 @@ func defaultPerson() Person {
 	}
 }
 
-func NewFamily() *Family {
+
+func NewFamily(fam ...customeFunc) *Family {
 	defaultPerson := defaultPerson()
+	for _, person := range fam {
+		person(&defaultPerson)
+	}
 	return &Family{
 		person: []Person{defaultPerson},
 	}
@@ -35,10 +40,17 @@ func (family *Family) AddFamily(name string, age int, martial string) {
 	family.person = append(family.person, person)
 }
 
+func UpdateName(name string) customeFunc {
+	return func(p *Person) {
+		p.Name = name
+	}
+}
+
 func main() {
-	family := NewFamily()
+	family := NewFamily(UpdateName("fufa"))
 	family.AddFamily("namaste", 23, "rrt")
-	for _, val:=range family.person{
+
+	for _, val := range family.person {
 		fmt.Println(val)
 	}
 }
