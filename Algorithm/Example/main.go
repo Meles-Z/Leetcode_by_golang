@@ -15,7 +15,7 @@ func main() {
 		fmt.Println("Your input need like this format: go run main.go <num1> <num2>")
 		return
 	}
-    
+
 	arg1 := os.Args[1]
 	arg2 := os.Args[2]
 

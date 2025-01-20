@@ -55,6 +55,29 @@ func construct2DArray(original []int, m int, n int) [][]int {
 	return result
 }
 
+
+
+func returnTwoDimenstion(rows, cols int) [][]int {
+	matrix := make([][]int, rows)
+	for i := range matrix {
+		matrix[i] = make([]int, cols)
+	}
+
+	return matrix
+}
+
+func threeDimensions(rows, cols int) [][][]int {
+	matrix := make([][][]int, rows)
+	for i:=range matrix{
+		matrix[i]=make([][]int, rows)
+		for j:=range matrix[i]{
+			matrix[i][j]=make([]int, cols)
+		}
+	}
+	return matrix
+}
+
+
 func main() {
 	fmt.Println(Identity(4))
 	fmt.Println(AddMatrix([2][2]int{{1, 2}, {1, 2}}, [2][2]int{{3, 4}, {5, 6}}))
