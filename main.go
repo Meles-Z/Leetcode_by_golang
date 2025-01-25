@@ -2,20 +2,28 @@ package main
 
 import (
 	"fmt"
-	"math/rand"
-	"strings"
-	"time"
+	"sync"
 )
 
-func say(id int, phrase string) {
-	for _, word := range strings.Fields(phrase) {
-		fmt.Printf("Worked %d says: %s...\n", id, word)
-		dur := time.Duration(rand.Intn(100)) * time.Microsecond
-		time.Sleep(dur)
+var wg sync.WaitGroup
+
+func squareOfNums(nums []int, result chan<- int) {
+	defer wg.Done()
+	for _, num := range nums {
+		result <- num * num
 	}
 }
 
 func main() {
-	say(1, "Golang is the best progg!")
-	say(2, "What is going on")
+	val := []int{1, 2, 3, 4, 5}
+	ch := make(chan int, len(val))
+	wg.Add(1)
+	go squareOfNums(val, ch)
+	wg.Wait()
+	close(ch)
+	var square []int
+	for res := range ch {
+		square = append(square, res)
+	}
+	fmt.Println("Squares:", square)
 }
