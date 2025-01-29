@@ -1,0 +1,80 @@
+[
+    {
+      "userId": 1,
+      "userName": "Alex",
+      "isActive": true,
+      "skills": {
+        "languagesKnown": [
+          "Python",
+          "Go"
+        ],
+        "passion": [
+          "Technical Program Management",
+          "Automation"
+        ]
+      },
+      "roles": [
+        "project-lead",
+        "billing-admin"
+      ],
+      "training-credit": 500.5
+    },
+    {
+      "userId": 2,
+      "userName": "Tim",
+      "isActive": true,
+      "skills": {
+        "languagesKnown": [
+          "JAVA",
+          "Node.js"
+        ],
+        "passion": [
+          "Web Development",
+          "DevOps"
+        ]
+      },
+      "roles": [
+        "project-member",
+        "billing-viewer"
+      ],
+      "training-credit": 98.5
+    },
+    {
+      "userId": 3,
+      "userName": "Ram",
+      "isActive": true,
+      "skills": {
+        "languagesKnown": [
+          "Python",
+          "ABAP"
+        ],
+        "passion": [
+          "Web Services",
+          "CI/CD Pipelines"
+        ]
+      },
+      "roles": [
+        "project-admin",
+        "billing-viewer"
+      ],
+      "training-credit": 44.5
+    },
+    {
+      "userId": 4,
+      "userName": "Sam",
+      "isActive": true,
+      "skills": {
+        "languagesKnown": [
+          "Go"
+        ],
+        "passion": [
+          "DevOps"
+        ]
+      },
+      "roles": [
+        "project-member"
+      ],
+      "training-credit": 128.5
+    }
+  ]
+  
