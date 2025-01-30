@@ -1,0 +1,32 @@
+[
+ {
+  "Id": 1,
+  "Name": "Vegt",
+  "Seller": {
+   "Id": 1,
+   "Name": "fff",
+   "CountryCode": "+251"
+  },
+  "Price": 50.5
+ },
+ {
+  "Id": 2,
+  "Name": "Vv",
+  "Seller": {
+   "Id": 2,
+   "Name": "f",
+   "CountryCode": "54"
+  },
+  "Price": 40.5
+ },
+ {
+  "Id": 3,
+  "Name": "fft",
+  "Seller": {
+   "Id": 3,
+   "Name": "g",
+   "CountryCode": "4334"
+  },
+  "Price": 40.4
+ }
+]
