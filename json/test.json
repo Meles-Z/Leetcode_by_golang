@@ -1,0 +1,21 @@
+{
+    "userId": 1,
+    "userName": "Alex",
+    "isActive": true,
+    "skills": {
+      "languagesKnown": [
+        "Python",
+        "Go"
+      ],
+      "passion": [
+        "Technical Program Management",
+        "Automation"
+      ]
+    },
+    "roles": [
+      "project-lead",
+      "billing-admin"
+    ],
+    "training-credit": 500.5
+  }
+  
