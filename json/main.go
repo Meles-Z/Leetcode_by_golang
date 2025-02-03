@@ -182,38 +182,37 @@
 
 package main
 
-import (
-	"encoding/json"
-	"fmt"
-	"log"
-	"os"
-)
+// import (
+// 	"fmt"
+// 	"log"
+// 	"os"
+// )
 
-type Seller struct {
-	Id          int    `json:"id"`
-	Name        string `json:"name"`
-	CountryCode string `json:"country_code,omitempty"`
-}
-type Product struct {
-	Id     int    `json:"-"`
-	Name   string `json:"name"`
-	Seller Seller `json:"seller"`
-	Price  int    `json:"price"`
-}
+// type Seller struct {
+// 	Id          int    `json:"id"`
+// 	Name        string `json:"name"`
+// 	CountryCode string `json:"country_code,omitempty"`
+// }
+// type Product struct {
+// 	Id     int    `json:"-"`
+// 	Name   string `json:"name"`
+// 	Seller Seller `json:"seller"`
+// 	Price  int    `json:"price"`
+// }
 
-func main() {
-	fmt.Println("Let us dive into json unmarshaller")
-	// its totall inverse of json.Marshal
-	// takes butes
+// func main() {
+// 	fmt.Println("Let us dive into json unmarshaller")
+// 	// its totall inverse of json.Marshal
+// 	// takes butes
 
-	file, err := os.ReadFile("ff.txt")
-	if err != nil {
-		log.Fatalln(err)
-	}
-	var prod Product
+// 	file, err := os.ReadFile("ff.txt")
+// 	if err != nil {
+// 		log.Fatalln(err)
+// 	}
+// 	var prod Product
 
-	// err := json.Unmarshal(file, &prod)
-	
-	// fmt.Println(mrsh)
+// 	// err := json.Unmarshal(file, &prod)
 
-}
+// 	// fmt.Println(mrsh)
+
+// }
