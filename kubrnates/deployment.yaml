@@ -1,0 +1,22 @@
+apiVersion: apps/v1  # Use apps/v1 for Deployments
+kind: Deployment
+metadata:
+  name: first-deployment
+  namespace: default
+  labels:
+    app: test-deployment
+spec:
+  replicas: 3  # Number of Pod replicas to create
+  selector:
+    matchLabels:
+      app: test-deployment  # Must match the labels in the Pod template
+  template:  # Pod template
+    metadata:
+      labels:
+        app: test-deployment  # Labels for the Pods
+    spec:
+      containers:
+      - name: nginx-container  # Name of the container
+        image: nginx:latest  # Container image to use
+        ports:
+        - containerPort: 80  # Port exposed by the container
