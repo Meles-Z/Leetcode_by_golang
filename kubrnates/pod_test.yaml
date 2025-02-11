@@ -1,0 +1,16 @@
+# let us used how kubernetes work
+# how can pod work that can run multile container at onece, but not recommended to use greater than one container in pod.
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+  namespace: default
+spec:
+  containers:
+    - name: nginx
+      image: nginx
+      ports:
+        - containerPort: 80
+
+
