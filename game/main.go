@@ -19,9 +19,16 @@ func GuessNumber(num int, secret int) {
 func main() {
 	secret := 23
 	var num int
-	fmt.Println("Enter your guess:")
+	var atempt int
 	for {
+		fmt.Println("Enter your guess:")
 		fmt.Scanln(&num)
+		atempt += 1
+		fmt.Println("Attempt:",atempt)
+		if atempt > 5 {
+			fmt.Println("You finished your trial!")
+			break
+		}
 		GuessNumber(num, secret)
 		if num == secret {
 			break
