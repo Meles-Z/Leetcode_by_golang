@@ -72,36 +72,104 @@
 // 	fmt.Println(val1,val2, val3, val4)
 // }
 
+// package main
+
+// import (
+// 	"fmt"
+// 	"sync"
+// )
+
+// func evenNumber() {
+// 	for i := 0; i <= 10; i += 2 {
+// 		fmt.Println("Even:", i)
+// 	}
+// }
+
+// func oddNumber() {
+// 	for i := 1; i <= 10; i += 2 {
+// 		fmt.Println("Odd:", i)
+// 	}
+// }
+
+// func main() {
+// 	var wg sync.WaitGroup
+// 	wg.Add(2)
+// 	go func() {
+// 		defer wg.Done()
+// 		evenNumber()
+// 	}()
+
+// 	go func() {
+// 		defer wg.Done()
+// 		oddNumber()
+// 	}()
+// 	wg.Wait()
+// }
+
 package main
 
 import (
 	"fmt"
+	"math"
 	"sync"
 )
 
-func evenNumber() {
-	for i := 0; i <= 10; i += 2 {
-		fmt.Println("Even:", i)
+func prime(num int) bool {
+	if num <= 1 {
+		return false
 	}
+	if num == 2 { // Handle 2 as a prime number
+		return true
+	}
+	if num%2 == 0 {
+		return false
+	}
+	for i := 3; i <= int(math.Sqrt(float64(num))); i += 2 {
+		if num%i == 0 {
+			return false
+		}
+	}
+	return true
 }
 
-func oddNumber() {
-	for i := 1; i <= 10; i += 2 {
-		fmt.Println("Odd:", i)
+
+func printPrime(limit int) {
+	for i := 0; i < limit; i++ {
+		if prime(i) {
+			fmt.Println(i, "")
+		}
 	}
+	fmt.Println()
 }
 
+func printFibonacci(limit int) {
+	if limit<0{
+		fmt.Println("invalid value")
+		return
+	}
+	fib := make([]int, limit)
+	fib[0] = 1
+	fib[1] = 1
+	for i := 2; i < limit; i++ {
+		fib[i] = fib[i-1] + fib[i-2]
+		fmt.Println(fib[i]," ")
+	}
+	println()
+}
 func main() {
+	limit := 10
+	// prime(limit)
 	var wg sync.WaitGroup
 	wg.Add(2)
+
 	go func() {
 		defer wg.Done()
-		evenNumber()
+		printPrime(limit)
 	}()
 
 	go func() {
 		defer wg.Done()
-		oddNumber()
+		printFibonacci(limit)
 	}()
 	wg.Wait()
 }
